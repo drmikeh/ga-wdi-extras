@@ -26,3 +26,4 @@ Create a set of directories for a WDI student. This script will create the follo
 ~/ga/wdi/classwork    # a clone of the official student classwork GitHub repo.
 ```
 
+> Note: this script is non-destructive. It will simply add directories where needed.
