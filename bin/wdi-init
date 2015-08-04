@@ -6,7 +6,7 @@ else
   BASE_DIR=~
 fi
 
-VERSION=0.1.0
+VERSION=0.1.2
 WDI_DIR=$BASE_DIR/ga/wdi
 WDI_CLASSWORK_REPO=https://github.com/ga-students/WDI-ATL-4-Classwork
 
@@ -52,7 +52,7 @@ do
 
   case $key in
     -v|--version)
-    echo "git-hwk-submit $VERSION"
+    echo "wdi-init $VERSION"
     exit 0
     ;;
 
