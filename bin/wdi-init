@@ -33,14 +33,14 @@ create_dir() {
 }
 
 git_clone() {
-  git clone $1 $WDI_DIR/classwork
+  git clone $1 $WDI_DIR/$2
 }
 
 #
 # Main Script
 #
 
-while getopts ":vhd:" opt; do
+while getopts ":vd:h" opt; do
   case $opt in
     v)
       echo "wdi-init $VERSION"
@@ -80,7 +80,7 @@ create_dir $WDI_DIR/projects/project_1
 create_dir $WDI_DIR/projects/project_2
 create_dir $WDI_DIR/projects/project_3
 create_dir $WDI_DIR/projects/project_4
-git_clone $WDI_CLASSWORK_REPO
+git_clone $WDI_CLASSWORK_REPO classwork
 
 echo
 echo "==> All done!"
