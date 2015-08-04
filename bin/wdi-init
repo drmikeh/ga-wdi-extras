@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.1.4
+VERSION=0.1.5
 WDI_DIR=${WDI_DIR:=~/ga/wdi}
 WDI_CLASSWORK_REPO=https://github.com/ga-students/WDI-ATL-4-Classwork
 
@@ -34,6 +34,25 @@ create_dir() {
 
 git_clone() {
   git clone $1 $WDI_DIR/$2
+}
+
+make_readme() {
+  README_FILE=$WDI_DIR/README.md
+  touch $README_FILE
+  echo "<center>" >> $README_FILE
+  echo '![GA Logo](https://github.com/generalassembly/ga-ruby-on-rails-for-devs/raw/master/images/ga.png "GeneralAssemb.ly")' >> $README_FILE
+  echo "</center>" >> $README_FILE
+  echo "" >> $README_FILE
+  echo "# WDI ATL #4 - Home Directory" >> $README_FILE
+  echo "This is your home directory for WDI." >> $README_FILE
+  echo "This directory contains the following sub-directories:" >> $README_FILE
+  echo "" >> $README_FILE
+  echo "## classwork" >> $README_FILE
+  echo "A clone of our WDI Classwork GitHub Repository. You will be using \`git\` to keep this directory up to date with the latest additions." >> $README_FILE
+  echo "" >> $README_FILE
+  echo "## projects" >> $README_FILE
+  echo "This is where your individual and team project code will live. There will be 4 projects and the code will live here as well as being published on GitHub." >> $README_FILE
+  echo "" >> $README_FILE
 }
 
 #
@@ -81,6 +100,8 @@ create_dir $WDI_DIR/projects/project_2
 create_dir $WDI_DIR/projects/project_3
 create_dir $WDI_DIR/projects/project_4
 git_clone $WDI_CLASSWORK_REPO classwork
+
+make_readme
 
 echo
 echo "==> All done!"
