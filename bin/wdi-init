@@ -1,12 +1,17 @@
 #!/bin/bash
 
+TEST_MODE=false
 if [ "$(whoami)" == 'drmikeh' ]; then
+  TEST_MODE=true
+fi
+
+if $TEST_MODE ; then
   BASE_DIR=~/tmp2
 else
   BASE_DIR=~
 fi
 
-VERSION=0.1.2
+VERSION=0.1.3
 WDI_DIR=$BASE_DIR/ga/wdi
 WDI_CLASSWORK_REPO=https://github.com/ga-students/WDI-ATL-4-Classwork
 
@@ -82,19 +87,21 @@ create_dir $WDI_DIR/projects/project_3
 create_dir $WDI_DIR/projects/project_4
 git_clone $WDI_CLASSWORK_REPO
 
-echo
-echo "==> Results of find"
-find $BASE_DIR | grep -v .git
-echo
-echo "==> Contents of Classwork README.md"
-cat $WDI_DIR/classwork/README.md
-echo
+if $TEST_MODE ; then
+  echo
+  echo "==> Results of find"
+  find $BASE_DIR | grep -v .git
+  echo
+  echo "==> Contents of Classwork README.md"
+  cat $WDI_DIR/classwork/README.md
+fi
 
+echo
 
 #
 # Cleanup
 #
-if [ "$(whoami)" == 'drmikeh' ]; then
+if $TEST_MODE ; then
   echo "==> Cleanup"
   echo "==> Removing $WDI_DIR"
   rm -rf $WDI_DIR
