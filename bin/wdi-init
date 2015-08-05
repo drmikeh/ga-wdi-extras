@@ -59,7 +59,7 @@ make_readme() {
 # Main Script
 #
 
-while getopts ":vd:h" opt; do
+while getopts ":vhd:" opt; do
   case $opt in
     v)
       echo "wdi-init $VERSION"

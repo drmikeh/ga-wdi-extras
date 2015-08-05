@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Printing contents..."
+find /tmp/wdi-init-test | grep -v .git
+echo "Done"

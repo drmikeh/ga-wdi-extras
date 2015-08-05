@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd bad-style
+../../../bin/hwk-tester
+cd ../leap-year
+../../../bin/hwk-tester
+

@@ -1,0 +1,75 @@
+#!/bin/bash
+
+VERSION=0.1.0
+CMD_LINE_TOOLS="CLTools_Executables"
+MAC_REPORT_FILE=/tmp/mac-report.txt
+
+send_mail() {
+  TO_ADDRESS=${TO_ADDRESS:="mike.hopper@ga.co"}
+  SUBJECT="mac-report from $USER_NAME"
+  printf "\n=== Emailing mac-report to $TO_ADDRESS ==="
+  mail -s ${SUBJECT} ${TO_ADDRESS} < $MAC_REPORT_FILE
+}
+
+#
+# Main Script
+#
+
+while getopts ":vhm:" opt; do
+  case $opt in
+    v)
+      echo "wdi-init $VERSION"
+      exit 0
+      ;;
+    h)
+      echo "Usage: mac-report [-v] [-h] [-m <recipient>]"
+      echo "General options:"
+      echo "  -v              # Print the version information"
+      echo "  -h              # Print usage and options"
+      echo "  -m <recipient>  # send and email to recipient"
+      exit 0
+      ;;
+    m)
+      SEND_MAIL=true
+      TO_ADDRESS=$OPTARG
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+
+  esac
+done
+
+OS_VERSION=$(sw_vers -productVersion)
+
+USER_NAME=`whoami`
+INSTALLED_MEMORY=`sysctl -n hw.memsize`
+INSTALLED_MEMORY_IN_GB=`/usr/bin/bc <<< "scale = 3; ${INSTALLED_MEMORY} / 1024 / 1024 / 1000"`
+
+rm -rf $MAC_REPORT_FILE
+touch $MAC_REPORT_FILE
+printf "DATE: `date`\n" >> $MAC_REPORT_FILE
+printf "USER_NAME: $USER_NAME\n" >> $MAC_REPORT_FILE
+printf "OS_VERSION: $OS_VERSION\n" >> $MAC_REPORT_FILE
+printf "INSTALLED_MEMORY_IN_GB: $INSTALLED_MEMORY_IN_GB\n" >> $MAC_REPORT_FILE
+printf "\n" >> $MAC_REPORT_FILE
+df -h >> $MAC_REPORT_FILE
+printf "\n" >> $MAC_REPORT_FILE
+if [ ! -z $(pkgutil --pkgs=com.apple.pkg.$CMD_LINE_TOOLS) ]; then
+  CMD_LINE_TOOLS_VERSION=`pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | grep version`
+  printf "Command Line Tools $CMD_LINE_TOOLS_VERSION installed!\n" >> $MAC_REPORT_FILE
+else
+  printf "WARNING: Command Line Tools are *not* installed!\n" >> $MAC_REPORT_FILE
+  printf "Please use the App Store to install XCode.\n" >> $MAC_REPORT_FILE
+fi
+
+cat $MAC_REPORT_FILE
+
+if [ $SEND_MAIL ]; then
+  send_mail
+fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+./clean
+../../bin/wdi-init -d /tmp/wdi-init-test
+./print

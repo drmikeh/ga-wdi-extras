@@ -1,0 +1,46 @@
+#!/bin/bash
+
+VERSION=0.1.0
+
+while getopts ":vh" opt; do
+  case $opt in
+    v)
+      echo "hwk-tester $VERSION"
+      exit 0
+      ;;
+    h)
+      echo "Usage: hwk-tester [-v] [-h]"
+      echo "General options:"
+      echo "  -v              # Print the version information"
+      echo "  -h              # Print usage and options"
+      echo "Description:"
+      echo "  This script tests a homework solution by:"
+      echo "    (a) running any Jasmine unit tests found in the \"spec\" subdirectory"
+      echo "    (b) running jshint"
+      echo ""
+      echo "  Prerequisites"
+      echo "    (a) installation of jasmine-node: npm install -g jasmine-node"
+      echo "    (b) installation of jshint:       npm install -g jshint"
+      echo ""
+      echo "  For more information see:"
+      echo "    * https://github.com/mhevery/jasmine-node"
+      echo "    * https://github.com/jshint/jshint"
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+echo "=== Running jasmine-node ==="
+jasmine-node --verbose .
+
+echo "=== Running jshint ==="
+jshint -c ../jshint-options.json *.js
+echo "=== All done! ==="

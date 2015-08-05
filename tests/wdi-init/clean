@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Cleaning..."
+rm -rf /tmp/wdi-init-test
+echo "Done"
