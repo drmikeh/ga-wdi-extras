@@ -2,7 +2,7 @@
 , "boss": true
 , "browser": true
 , "camelcase": true
-, "curly": false
+, "curly": true
 , "devel": false
 , "devel": true
 , "eqeqeq": true

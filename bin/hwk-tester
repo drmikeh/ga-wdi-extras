@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.1.0
+VERSION=0.1.1
 
 while getopts ":vh" opt; do
   case $opt in
@@ -41,6 +41,10 @@ done
 echo "=== Running jasmine-node ==="
 jasmine-node --verbose .
 
-echo "=== Running jshint ==="
-jshint -c ../jshint-options.json *.js
+# echo "=== Running jshint ==="
+# jshint -c ../jshint-options.json *.js
+
+echo "=== Running jscs ==="
+jscs -c ../jscs-options.json *.js
+
 echo "=== All done! ==="

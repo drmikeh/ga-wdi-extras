@@ -1,6 +1,6 @@
-function fooBar(){
-console.log('fooBar');
-  var x = 'a bad global variable';
+function fooBar() {
+  console.log('fooBar');
+  var x = 'a good local variable';
   return x;
 }
 
