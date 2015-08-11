@@ -61,7 +61,7 @@ printf "\n" >> $MAC_REPORT_FILE
 df -h >> $MAC_REPORT_FILE
 printf "\n" >> $MAC_REPORT_FILE
 if [ ! -z $(pkgutil --pkgs=com.apple.pkg.$CMD_LINE_TOOLS) ]; then
-  CMD_LINE_TOOLS_VERSION=`pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | grep version`
+  CMD_LINE_TOOLS_VERSION=`pkgutil --pkg-info=com.apple.pkg.$CMD_LINE_TOOLS | grep version`
   printf "Command Line Tools $CMD_LINE_TOOLS_VERSION installed!\n" >> $MAC_REPORT_FILE
 else
   printf "WARNING: Command Line Tools are *not* installed!\n" >> $MAC_REPORT_FILE

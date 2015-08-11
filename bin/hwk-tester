@@ -1,9 +1,33 @@
 #!/bin/bash
 
-VERSION=0.1.1
+# TODOs:
+#   (a) recurse up the directory path until we find a jscs-options.json file
 
-while getopts ":vh" opt; do
+
+#
+# Find a file recursively but going *up* to parent directories
+#
+function upsearch_helper() {
+  test / == "$PWD" && return || \
+  test -e "$1" && echo "$PWD/$1" && return || \
+  cd .. && upsearch_helper "$1"
+}
+function upsearch() {
+  pushd . >> /dev/null
+  upsearch_helper $*
+  popd >> /dev/null
+}
+
+# The leading : in the options indicates to not print the standard error messages.
+# We print custom error messages below.
+while getopts ":vhjr" opt; do
   case $opt in
+    j)
+      TEST_JAVASCRIPT=true
+      ;;
+    r)
+      TEST_RUBY=true
+      ;;
     v)
       echo "hwk-tester $VERSION"
       exit 0
@@ -38,13 +62,28 @@ while getopts ":vh" opt; do
   esac
 done
 
-echo "=== Running jasmine-node ==="
-jasmine-node --verbose .
+if [ $TEST_JAVASCRIPT ]; then
+  echo "=== Running jasmine-node ==="
+  jasmine-node --verbose .
 
-# echo "=== Running jshint ==="
-# jshint -c ../jshint-options.json *.js
+  # echo "=== Running jshint ==="
+  # jshint -c ../jshint-options.json *.js
 
-echo "=== Running jscs ==="
-jscs -c ../jscs-options.json *.js
+  echo "=== Running jscs ==="
+  JSCS_OPTIONS_FILE=$(upsearch jscs-options.json)
+  echo "JSCS_OPTIONS_FILE: $JSCS_OPTIONS_FILE"
+  jscs -c $JSCS_OPTIONS_FILE *.js
+  echo
+fi
+if [ $TEST_RUBY ]; then
+  echo "=== Running RSPEC ==="
+  rspec
+  echo "=== Running Rubocop ==="
+  rubocop *.rb
+fi
+if [[ ! ($TEST_JAVASCRIPT || $TEST_RUBY) ]]; then
+  echo "ERROR: Please indicate what you want to test: -j for JavaScript, -r for Ruby"
+  exit 1
+fi
 
 echo "=== All done! ==="

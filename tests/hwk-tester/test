@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd bad-style
-../../../bin/hwk-tester
+../../../bin/hwk-tester -j -r
 cd ../leap-year
-../../../bin/hwk-tester
+../../../bin/hwk-tester -j -r
 
