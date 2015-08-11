@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# TODOs:
-#   (a) recurse up the directory path until we find a jscs-options.json file
-
+VERSION=0.1.2
 
 #
 # Find a file recursively but going *up* to parent directories
