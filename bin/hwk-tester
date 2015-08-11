@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.1.4
+VERSION=0.1.5
 
 #
 # Find a file recursively but going *up* to parent directories
@@ -39,16 +39,24 @@ while getopts ":vhjr" opt; do
       echo "  -h              # Print usage and options"
       echo "Description:"
       echo "  This script tests a homework solution by:"
+      echo "  JavaScript:"
       echo "    (a) running any Jasmine unit tests found in the \"spec\" subdirectory"
-      echo "    (b) running jshint"
+      echo "    (b) running jscs"
+      echo "  Ruby:"
+      echo "    (a) running any RSpec unit tests found in the \"spec\" subdirectory"
+      echo "    (b) running rubocop"
       echo ""
       echo "  Prerequisites"
       echo "    (a) installation of jasmine-node: npm install -g jasmine-node"
-      echo "    (b) installation of jshint:       npm install -g jshint"
+      echo "    (b) installation of jscs:         npm install -g jscs"
+      echo "    (c) installation of rspec:        gem install rspec"
+      echo "    (d) installation of rubocop:      gem install rubocop"
       echo ""
       echo "  For more information see:"
       echo "    * https://github.com/mhevery/jasmine-node"
-      echo "    * https://github.com/jshint/jshint"
+      echo "    * https://github.com/jscs-dev/node-jscs"
+      echo "    * http://rspec.info/"
+      echo "    * https://github.com/bbatsov/rubocop"
       exit 0
       ;;
     \?)
@@ -76,7 +84,7 @@ if [ $TEST_JAVASCRIPT ]; then
   echo
 fi
 if [ $TEST_RUBY ]; then
-  echo "=== Running RSPEC ==="
+  echo "=== Running RSpec ==="
   rspec
   echo "=== Running Rubocop ==="
   rubocop *.rb
