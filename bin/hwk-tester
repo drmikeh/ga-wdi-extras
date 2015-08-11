@@ -33,6 +33,8 @@ while getopts ":vhjr" opt; do
     h)
       echo "Usage: hwk-tester [-v] [-h]"
       echo "General options:"
+      echo "  -j              # Run tests for JavaScript"
+      echo "  -r              # Run tests for Ruby"
       echo "  -v              # Print the version information"
       echo "  -h              # Print usage and options"
       echo "Description:"
