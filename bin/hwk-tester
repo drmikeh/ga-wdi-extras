@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.1.5
+VERSION=0.1.6
 
 #
 # Find a file recursively but going *up* to parent directories
@@ -85,7 +85,7 @@ if [ $TEST_JAVASCRIPT ]; then
 fi
 if [ $TEST_RUBY ]; then
   echo "=== Running RSpec ==="
-  rspec
+  rspec spec --format doc
   echo "=== Running Rubocop ==="
   rubocop *.rb
 fi
